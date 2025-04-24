@@ -2,6 +2,7 @@ import discord
 import logging
 import os
 from dotenv import load_dotenv
+import bingus
 
 load_dotenv()
 
@@ -20,8 +21,13 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+    
+    user = message.author
+    content = message.content.lower()
+    if content.startswith('$bingus'):
+        await message.channel.send(bingus.handle_bingus(content, user))
 
-    if message.content.startswith('$hello'):
+    if content.startswith('$hello'):
         await message.channel.send('Hello World!')
     
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
